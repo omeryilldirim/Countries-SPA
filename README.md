@@ -15,3 +15,11 @@
 - The background color used for the selected item should be picked from a predefined set of colors (which you should define yourself). Make sure that when an item is selected, the color is different from the previous item that was selected
 
 - After the items are loaded and after filtering, automatically select the 10th item, or the last one if the amount of items is smaller than 10 The implementation should take into account that the list can get very long.
+
+## Expected Outcome
+**<div align="center">![Project Snapshot](snapshot.png)</div>**
+
+### Tools used for the project:
+- React, Apollo Client, GraphQL, Material UI, TypeScript, and react-toastify.
+
+**<p align="center">&#9786; Happy Coding &#9997;</p>**
