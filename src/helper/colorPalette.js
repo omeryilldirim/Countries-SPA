@@ -1,6 +1,6 @@
 const colorPalette = [
-    '#f3f0dd',
     '#f0d4e7',
+    '#f3f0dd',
     '#dac2b0',
     '#c3ebf7',
     '#fff2cf',

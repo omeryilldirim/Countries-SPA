@@ -15,6 +15,7 @@ const CountriesList = ({searchTerms}: { searchTerms: SearchTerms }) => {
 
   const filterCountries = () => {
     if (!countries) return
+    setColorIndex((prevIndex) => (prevIndex + 1) % colorPalette.length) ;
     // If no search terms, return all countries
     if (!searchTerms.text) {
       setFilteredCountries(countries)
