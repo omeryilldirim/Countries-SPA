@@ -3,10 +3,27 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Divider, Stack } from '@mui/material';
 import colorPalette from '../helper/colorPalette';
+import { Country } from '../helper/types';
 
-const CountryCard = ({country, selectedCountry, setSelectedCountry, color, setColorIndex, index}) => {
-    const checkAndTruncateArray = (arr) => arr.length > 8 ? arr.slice(0, 8).join(', ') + `...[${arr.length}]` : arr.join(', ')
-    const states = country.states.map((state)=> state.name)
+interface CountryCardProps {
+    country: Country;
+    selectedCountry: string | null;
+    setSelectedCountry: (code: string | null) => void;
+    color: string;
+    setColorIndex: React.Dispatch<React.SetStateAction<number>>
+    index: number;
+}
+
+const CountryCard: React.FC<CountryCardProps> = ({
+    country,
+    selectedCountry,
+    setSelectedCountry,
+    color,
+    setColorIndex,
+    index,
+  }) => {
+    const checkAndTruncateArray = (arr: string[]): string  => arr.length > 8 ? arr.slice(0, 8).join(', ') + `...[${arr.length}]` : arr.join(', ')
+    const states = country.states?.map((state:any)=> state.name) || []
     const truncatedArray = checkAndTruncateArray(states)
 
     const handleCountryClick = () => {
@@ -14,7 +31,7 @@ const CountryCard = ({country, selectedCountry, setSelectedCountry, color, setCo
             setSelectedCountry(null)
         } else {
             setSelectedCountry(country.code)
-            setColorIndex((prevIndex) => (prevIndex + 1) % colorPalette.length);
+            setColorIndex((prevIndex) => (prevIndex + 1) % colorPalette.length) ;
         }
     }
 
@@ -26,7 +43,7 @@ const CountryCard = ({country, selectedCountry, setSelectedCountry, color, setCo
                         {country.emoji}
                     </Typography>
                     <Typography textAlign={'center'} variant="h6">
-                        {index+') '}{country.name}
+                        {index + ') ' + country.name}
                     </Typography>
                     <Divider />
                     <Stack direction={'column'} gap={0.5} mt={1}>

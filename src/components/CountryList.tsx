@@ -4,46 +4,29 @@ import { CircularProgress, Stack, Typography } from '@mui/material';
 import CountryCard from './CountryCard';
 import { useState, useEffect } from 'react';
 import colorPalette from '../helper/colorPalette';
-
-interface SearchTerms {
-  text: string;
-  field: string;
-}
-
-interface Country {
-  code: string;
-  name: string;
-  emoji: string;
-  emojiU: string;
-  continent: {
-    name: string;
-  };
-  currency: string;
-  languages: {
-    name: string;
-  }[];
-  [key: string]: any;
-}
+import { SearchTerms, Country } from '../helper/types';
 
 const CountriesList = ({searchTerms}: { searchTerms: SearchTerms }) => {
   const { loading, error, data:{countries} = [] } = useQuery(GET_COUNTRIES);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [colorIndex, setColorIndex] = useState(0)
+  const [colorIndex, setColorIndex] = useState<number>(0)
   const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
 
   const filterCountries = () => {
     if (!countries) return
+    // If no search terms, return all countries
     if (!searchTerms.text) {
       setFilteredCountries(countries)
       return
     }
+    // Filter countries by search text
     const filteredCountries = countries.filter((country:Country)=>{
       return country.name.toLowerCase().includes(searchTerms.text)
     })
-    const groupingField = filteredCountries[0][searchTerms.field]
-
+    // Check if there is a valid grouping field and if not, return filtered countries
+    const groupingField = filteredCountries.length && filteredCountries[0][searchTerms.field]
     if(!groupingField) return setFilteredCountries(filteredCountries)
-
+    // Sort the filtered countries by the grouping field
     filteredCountries.sort((a:Country, b:Country)=> {
       if (Array.isArray(groupingField)) {
         return a[searchTerms.field].length >= b[searchTerms.field].length ? -1 : 1
@@ -51,7 +34,7 @@ const CountriesList = ({searchTerms}: { searchTerms: SearchTerms }) => {
         if ( typeof groupingField === 'object') {
           return a[searchTerms.field].name.localeCompare(b[searchTerms.field].name)
         } else {
-          return a[searchTerms.field].toLowerCase() - b[searchTerms.field].toLowerCase()
+          return a[searchTerms.field].localeCompare(b[searchTerms.field])
         }
       }
     })
@@ -70,7 +53,6 @@ const CountriesList = ({searchTerms}: { searchTerms: SearchTerms }) => {
     if (filteredCountries.length > 0) select10thItem()
   }, [filteredCountries])
   
-
   useEffect(() => {
     filterCountries()
   }, [searchTerms, countries])
@@ -98,6 +80,7 @@ const CountriesList = ({searchTerms}: { searchTerms: SearchTerms }) => {
               setColorIndex={setColorIndex}
             />
         ))}
+        {filteredCountries.length === 0 && <Typography textAlign={'center'} fontSize={'1.5rem'}>No countries found</Typography>}
     </Stack>
   )
 }
