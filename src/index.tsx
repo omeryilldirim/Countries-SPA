@@ -20,7 +20,7 @@ root.render(
     <ApolloProvider client={client}>
       <App />
       <ToastContainer 
-        position="top-center"
+        position="top-right"
         autoClose={3000}
         closeOnClick
         draggable

@@ -5,6 +5,7 @@ import CountryCard from './CountryCard';
 import { useState, useEffect } from 'react';
 import colorPalette from '../helper/colorPalette';
 import { SearchTerms, Country } from '../helper/types';
+import { toast } from 'react-toastify';
 
 const CountriesList = ({searchTerms}: { searchTerms: SearchTerms }) => {
   const { loading, error, data:{countries} = [] } = useQuery(GET_COUNTRIES);
@@ -23,9 +24,12 @@ const CountriesList = ({searchTerms}: { searchTerms: SearchTerms }) => {
     const filteredCountries = countries.filter((country:Country)=>{
       return country.name.toLowerCase().includes(searchTerms.text)
     })
-    // Check if there is a valid grouping field and if not, return filtered countries
+    // Check if there is a valid grouping field and if not, return filtered countries and alert
     const groupingField = filteredCountries.length && filteredCountries[0][searchTerms.field]
-    if(!groupingField) return setFilteredCountries(filteredCountries)
+    if(!groupingField) {
+      toast.info(`Invalid grouping field: "${searchTerms.field}"`)
+      return setFilteredCountries(filteredCountries)
+    }
     // Sort the filtered countries by the grouping field
     filteredCountries.sort((a:Country, b:Country)=> {
       if (Array.isArray(groupingField)) {
