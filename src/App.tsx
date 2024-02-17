@@ -12,7 +12,6 @@ function App() {
     if (userInput === '') {
       return { text: '', field: '' };
     }
-    // Remove whitespaces and convert to lowercase
     const trimmedInput = userInput.trim().toLowerCase();
     // Split text and field with regex
     const parts = trimmedInput.match(/^search:(.+?) group:(.+)$/);

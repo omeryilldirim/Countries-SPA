@@ -28,7 +28,7 @@ const CountriesList = ({searchTerms}: { searchTerms: SearchTerms }) => {
     // Check if there is a valid grouping field and if not, return filtered countries and alert
     const groupingField = filteredCountries.length && filteredCountries[0][searchTerms.field]
     if(!groupingField) {
-      toast.info(`Invalid grouping field: "${searchTerms.field}"`)
+      toast.info(`"${searchTerms.field}" did not match any field.`)
       return setFilteredCountries(filteredCountries)
     }
     // Sort the filtered countries by the grouping field
