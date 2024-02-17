@@ -31,7 +31,7 @@ const CountriesList = ({searchTerms}: { searchTerms: SearchTerms }) => {
       searchTerms.field && toast.info(`' ${searchTerms.field} ' did not match any field.`)
       return setFilteredCountries(filteredCountries)
     }
-    // Sort the filtered countries by the grouping field
+    // Sort the filtered countries by the grouping field checking if it is an array or object
     filteredCountries.sort((a:Country, b:Country)=> {
       if (Array.isArray(groupingField)) {
         return a[searchTerms.field].length >= b[searchTerms.field].length ? -1 : 1
