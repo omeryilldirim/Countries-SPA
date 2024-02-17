@@ -14,7 +14,7 @@ function App() {
     }
     const trimmedInput = userInput.trim().toLowerCase();
     // Split text and field with regex
-    const parts = trimmedInput.match(/^search:(.+?) group:(.*?)$/);
+    const parts = trimmedInput.match(/^search:(.+?)(?: group:(.*?))?$/);
     // Check if input is in the correct format
     if (!parts) {
       toast.warn('Invalid input format. Please use "search:<text> group:<field>"');
@@ -22,7 +22,7 @@ function App() {
     }
     return {
       text: parts[1].trim(),
-      field: parts[2].trim(),
+      field: parts[2] ? parts[2].trim() : '',
     };
   }
 
@@ -48,7 +48,7 @@ function App() {
                 variant="outlined" 
                 sx={{width:'40%', maxWidth: 'lg'}}
                 placeholder='search:<text>  group:<field>' 
-                helperText='Please search for keyword and grouping field as requested.(search:<text>  group:<field>)'
+                helperText='Please search for keyword and grouping field (optional) as defined.(search:<text>  group:<field>)'
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearchClick()}
               />
