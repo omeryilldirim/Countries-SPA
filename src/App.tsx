@@ -14,7 +14,6 @@ function App() {
     }
     const trimmedInput = userInput.trim().toLowerCase();
     // Split text and field with regex
-    // const parts = trimmedInput.match(/^search:(.+?) group:(.+)$/);
     const parts = trimmedInput.match(/^search:(.+?) group:(.*?)$/);
     // Check if input is in the correct format
     if (!parts) {
